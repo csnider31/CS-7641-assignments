@@ -14,11 +14,12 @@ from func.nn.activation import RELU
 from base import *
 
 # Network parameters found "optimal" in Assignment 1
-INPUT_LAYER = 8
-HIDDEN_LAYER1 = 16
-HIDDEN_LAYER2 = 16
+INPUT_LAYER = 12
+HIDDEN_LAYER1 = 24
+HIDDEN_LAYER2 = 24
 OUTPUT_LAYER = 1
-TRAINING_ITERATIONS = 5001
+TRAINING_ITERATIONS = 1001
+INITIAL_LEARNING_RATE = 0.001
 OUTFILE = OUTPUT_DIRECTORY + '/NN_OUTPUT/NN_{}_LOG.csv'
 
 
@@ -32,7 +33,7 @@ def main():
     data_set = DataSet(training_ints)
     relu = RELU()
     # 50 and 0.000001 are the defaults from RPROPUpdateRule.java
-    rule = RPROPUpdateRule(0.064, 50, 0.000001)
+    # rule = RPROPUpdateRule(INITIAL_LEARNING_RATE, 50, 0.000001)
     oa_names = ["RHC"]
     classification_network = factory.createClassificationNetwork(
         [INPUT_LAYER, HIDDEN_LAYER1, HIDDEN_LAYER2, OUTPUT_LAYER], relu)
