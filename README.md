@@ -2,7 +2,9 @@
 
 This repo is full of code for [CS 7641 - Machine Learning](https://www.omscs.gatech.edu/cs-7641-machine-learning) at Georgia Tech. 
 
-A huge thanks to jontay ([https://github.com/JonathanTay](https://github.com/JonathanTay)) for sharing his code. Much of the code contained in this repo is based off of his work.
+A huge thanks to cmaron ([https://github.com/cmaron](https://github.com/cmaron)) for sharing his code. Much of the code contained in this repo is based off of his work.
+
+cmaron - "A huge thanks to jontay ([https://github.com/JonathanTay](https://github.com/JonathanTay)) for sharing his code. Much of the code contained in this repo is based off of his work."
 
 ## Wait, code?
 
