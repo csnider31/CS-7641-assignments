@@ -376,6 +376,28 @@ class StatlogVehicleData(DataLoader):
     def pre_training_adjustment(self, train_features, train_classes):
         return train_features, train_classes
 
+class WineQualityData(DataLoader):
+
+    def __init__(self, path='data/winequality', verbose=False, seed=1):
+        super().__init__(path, verbose, seed)
+
+    def _load_data(self):
+        self._data = pd.read_csv(self._path + '-white.csv', delimiter=';').assign(red=0)
+        self._data = self._data.append(pd.read_csv(self._path + '-red.csv', delimiter=';').assign(red=1))
+
+    def data_name(self):
+        return 'WineQualityData'
+
+    def class_column_name(self):
+        return 'quality'
+
+    def _preprocess_data(self):
+        self._data['class'] = 0
+        self._data.loc[self._data['quality'] > 5, 'class'] = 1
+        self._data = self._data.drop(['quality'], axis=1)
+
+    def pre_training_adjustment(self, train_features, train_classes):
+        return train_features, train_classes
 
 if __name__ == '__main__':
     cd_data = CreditDefaultData(verbose=True)

@@ -55,16 +55,16 @@ if __name__ == '__main__':
         #     'name': 'htru2',
         #     'readable_name': 'HTRU2',
         # },
-        {
-            'data': loader.CreditApprovalData(verbose=verbose, seed=seed),
-            'name': 'credit_approval',
-            'readable_name': 'Credit Approval',
-        },
-        {
-            'data': loader.PenDigitData(verbose=verbose, seed=seed),
-            'name': 'pen_digits',
-            'readable_name': 'Handwritten Digits',
-        }
+        # {
+        #     'data': loader.CreditApprovalData(verbose=verbose, seed=seed),
+        #     'name': 'credit_approval',
+        #     'readable_name': 'Credit Approval',
+        # },
+        # {
+        #     'data': loader.PenDigitData(verbose=verbose, seed=seed),
+        #     'name': 'pen_digits',
+        #    'readable_name': 'Handwritten Digits',
+        # }
         # {
         #     'data': loader.SpamData(verbose=verbose, seed=seed),
         #     'name': 'spam',
@@ -74,7 +74,12 @@ if __name__ == '__main__':
         #     'data': loader.CreditDefaultData(verbose=verbose, seed=seed),
         #     'name': 'credit_default',
         #     'readable_name': 'Credit Default',
-        # }
+        # },
+		{
+		    'data': loader.WineQualityData(verbose=verbose, seed=seed),
+		    'name': 'wine',
+			'readable_name': 'Wine Quality'
+		}
     ]
 
     experiment_details = []
