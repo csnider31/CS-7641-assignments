@@ -120,7 +120,6 @@ if __name__ == '__main__':
             threads=threads,
             seed=seed
         ))
-    quit()
 
     if args.all or args.benchmark or args.ica or args.pca or args.lda or args.svd or args.rf or args.rp:
         if verbose:
