@@ -40,8 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('--skiprerun', action='store_true',
                         help='If true, do not re-run the main experiment before clustering '
                              '(This MUST be used with --dim and a specific experiment)')
-    parser.add_argument('--statlog', action='store_true', help='Run only statlog vehicle')
-    parser.add_argument('--htru2', action='store_true', help='Run only HTRU2')
+    parser.add_argument('--wine', action='store_true', help='Run only wine quality')
+    parser.add_argument('--adult', action='store_true', help='Run only census income')
     parser.add_argument('--benchmark', action='store_true', help='Run the benchmark experiments')
     parser.add_argument('--ica', action='store_true', help='Run the ICA experiments')
     parser.add_argument('--pca', action='store_true', help='Run the PCA experiments')
@@ -67,11 +67,11 @@ if __name__ == '__main__':
         parser.print_help()
         sys.exit(1)
 
-    if args.statlog and args.htru2:
-        logger.error("Can only specify one of '--statlog' or '--htru2', not both")
+    if args.wine and args.adult:
+        logger.error("Can only specify one of '--wine' or '--adult', not both")
         parser.print_help()
         sys.exit(1)
-
+        
     seed = args.seed
     if seed is None:
         seed = np.random.randint(0, (2 ** 32) - 1)
@@ -83,23 +83,24 @@ if __name__ == '__main__':
     logger.info("----------")
 
     datasets = []
-    statlog_details = {
-            'data': loader.StatlogVehicleData(verbose=verbose, seed=seed),
-            'name': 'statlog_vehicle',
-            'readable_name': 'Statlog Vehicle',
+    wine_details = {
+            'data': loader.WineQualityData(verbose=verbose, seed=seed),
+            'name': 'wine',
+            'readable_name': 'Wine Quality',
         }
-    htru2_details = {
-            'data': loader.HTRU2Data(verbose=verbose, seed=seed),
-            'name': 'htru2',
-            'readable_name': 'HTRU2',
+    adult_details = {
+            'data': loader.AdultData(verbose=verbose, seed=seed),
+            'name': 'adult',
+            'readable_name': 'Census Income',
         }
-    if args.statlog:
-        datasets.append(statlog_details)
-    elif args.htru2:
-        datasets.append(htru2_details)
-    elif not args.statlog and not args.htru2:
-        datasets.append(statlog_details)
-        datasets.append(htru2_details)
+    if args.wine:
+        datasets.append(wine_details)
+    elif args.adult:
+        datasets.append(adult_details)
+    elif not args.wine and not args.adult:
+        datasets.append(wine_details)
+        datasets.append(adult_details)    
+    
 
     experiment_details = []
     for ds in datasets:
@@ -112,6 +113,7 @@ if __name__ == '__main__':
             threads=threads,
             seed=seed
         ))
+    quit()
 
     if args.all or args.benchmark or args.ica or args.pca or args.lda or args.svd or args.rf or args.rp:
         if verbose:
