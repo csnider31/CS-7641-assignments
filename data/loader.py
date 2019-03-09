@@ -399,6 +399,85 @@ class WineQualityData(DataLoader):
     def pre_training_adjustment(self, train_features, train_classes):
         return train_features, train_classes
 
+class AdultData(DataLoader):
+
+    def __init__(self, path='data/adult.data.csv', verbose=False, seed=1):
+        super().__init__(path, verbose, seed)
+
+    def _load_data(self):
+        self._data = pd.read_csv(self._path, delimiter=', ', engine='python', header=None)
+
+    def data_name(self):
+        return 'AdultData'
+
+    def class_column_name(self):
+        return 'income'
+
+    def _preprocess_data(self):
+        adult = self._data.copy()
+        adult.columns = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status',
+                         'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 
+                         'hours-per-week', 'native-country', 'income']
+        adult['cap_gain_loss'] = adult['capital-gain']-adult['capital-loss']
+        adult = adult.drop(['fnlwgt','education','capital-gain','capital-loss'],1)
+        adult['income'] = pd.get_dummies(adult.income)
+        replacements = {'Cambodia':' SE-Asia',
+                        'Canada':' British-Commonwealth',
+                        'China':' China',
+                        'Columbia':' South-America',
+                        'Cuba':' Other',
+                        'Dominican-Republic':' Latin-America',
+                        'Ecuador':' South-America',
+                        'El-Salvador':' South-America ',
+                        'England':' British-Commonwealth',
+                        'France':' Euro_1',
+                        'Germany':' Euro_1',
+                        'Greece':' Euro_2',
+                        'Guatemala':' Latin-America',
+                        'Haiti':' Latin-America',
+                        'Holand-Netherlands':' Euro_1',
+                        'Honduras':' Latin-America',
+                        'Hong':' China',
+                        'Hungary':' Euro_2',
+                        'India':' British-Commonwealth',
+                        'Iran':' Other',
+                        'Ireland':' British-Commonwealth',
+                        'Italy':' Euro_1',
+                        'Jamaica':' Latin-America',
+                        'Japan':' Other',
+                        'Laos':' SE-Asia',
+                        'Mexico':' Latin-America',
+                        'Nicaragua':' Latin-America',
+                        'Outlying-US(Guam-USVI-etc)':' Latin-America',
+                        'Peru':' South-America',
+                        'Philippines':' SE-Asia',
+                        'Poland':' Euro_2',
+                        'Portugal':' Euro_2',
+                        'Puerto-Rico':' Latin-America',
+                        'Scotland':' British-Commonwealth',
+                        'South':' Euro_2',
+                        'Taiwan':' China',
+                        'Thailand':' SE-Asia',
+                        'Trinadad&Tobago':' Latin-America',
+                        'United-States':' United-States',
+                        'Vietnam':' SE-Asia',
+                        'Yugoslavia':' Euro_2'}
+        adult['native-country'] = adult['native-country'].str.strip()
+        adult = adult.replace(to_replace={'native-country':replacements,
+                                          'workclass':{'Without-pay': 'Never-worked'},
+                                          'relationship':{'Husband': 'Spouse','Wife':'Spouse'}})    
+        adult['native-country'] = adult['native-country'].str.strip()
+        for col in ['workclass','marital-status','occupation','relationship','race','sex','native-country']:
+            adult[col] = adult[col].str.strip()
+        adult = pd.get_dummies(adult)
+        income = adult.pop('income')
+        adult['income'] = income 
+        self._data = pd.get_dummies(adult)
+
+    def pre_training_adjustment(self, train_features, train_classes):
+        return train_features, train_classes
+
+
 if __name__ == '__main__':
     cd_data = CreditDefaultData(verbose=True)
     cd_data.load_and_process()
