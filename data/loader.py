@@ -401,7 +401,7 @@ class WineQualityData(DataLoader):
 
 class AdultData(DataLoader):
 
-    def __init__(self, path='data/adult.data.csv', verbose=False, seed=1):
+    def __init__(self, path='data/adult.data', verbose=False, seed=1):
         super().__init__(path, verbose, seed)
 
     def _load_data(self):
