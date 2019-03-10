@@ -71,7 +71,7 @@ class BaseExperiment(ABC):
         pass
 
     def gs_with_best_estimator(self, pipe, grid, type=None):
-        gs = GridSearchCV(pipe, grid, verbose=10, cv=5, scoring=self._scorer, n_jobs=self._details.threads)
+        gs = GridSearchCV(pipe, grid, verbose=10, cv=5, scoring='accuracy', n_jobs=self._details.threads)
         gs.fit(self._details.ds.training_x, self._details.ds.training_y)
 
         best_estimator = gs.best_estimator_.fit(self._details.ds.training_x, self._details.ds.training_y)
