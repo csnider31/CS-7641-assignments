@@ -215,7 +215,7 @@ def plot_scree(title, df, problem_name, multiple_runs=False, xlabel='Number of C
     else:
         ax.axvline(x=knee_point, linestyle="--", label="Knee: {}".format(knee_point))
 
-    ax.set_xticks(df.index.values, minor=False)
+    #ax.set_xticks(df.index.values, minor=False)
 
     plt.legend(loc="best")
 
@@ -325,9 +325,10 @@ def plot_combined(title, df, data_columns, tsne_data=None, extra_data=None, extr
     if extra_data is not None and extra_data_name is not None:
         ex_ax = ax1.twinx()
         ex_ax.plot(extra_data.index.values, extra_data.iloc[:, 0], linewidth=1,
-                   label=extra_data_name)
+                   label=extra_data_name, color='red')
         ex_ax.set_ylabel(extra_data_name)
         ex_ax.tick_params('y')
+        ex_ax.yaxis.label.set_color('red')
 
     ax1.legend(loc="best")
     ax1.grid()
