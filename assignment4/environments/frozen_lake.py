@@ -27,6 +27,23 @@ MAPS = {
         "FHFFHFHF",
         "FFFHFFFG"
     ],
+    "16x16": ["SFFFFHFFFFFFFHFF",
+        "FFHFFHFHHHFFFFFF",
+        "FFFFFFFFFFHFFHFF",
+        "HFFHFFFFFFFFFFHF",
+        "HFHFHHFFHFFFFFHH",
+        "HFHFFHFFFFFFFFFF",
+        "HFFFHHFFFFFFFFHF",
+        "HFHFFFHFFFHFFHFF",
+        "FFFFFFFHFFFHFFFF",
+        "HFFFHFFFFFFFFFFF",
+        "FHFFFFHFFHHFFFHF",
+        "FFFFHHFFFHFFHFFF",
+        "FFFFFFFFFFHFHFFF",
+        "FFFFFFFFFFHFHHFF",
+        "FFFFFFFFFFHHFHFF",
+        "FFFFFFFFFFFFHFFG"
+    ],
     "20x20": [
         "SFFFFFFHHHFFFFFFFFFF",
         "FFFFFFFFFFFFFFFFHHFF",
@@ -136,7 +153,7 @@ class RewardingFrozenLakeEnv(discrete.DiscreteEnv):
                                 done = bytes(newletter) in b'GH'
                                 rew = float(newletter == b'G')
                                 if self.rewarding:
-                                    if newletter == b'F':
+                                    if newletter in b'FS':
                                         rew = self.step_reward
                                     elif newletter == b'H':
                                         rew = self.hole_reward
@@ -148,7 +165,7 @@ class RewardingFrozenLakeEnv(discrete.DiscreteEnv):
                             done = bytes(newletter) in b'GH'
                             rew = float(newletter == b'G')
                             if self.rewarding:
-                                if newletter == b'F':
+                                if newletter in b'FS':
                                     rew = self.step_reward
                                 elif newletter == b'H':
                                     rew = self.hole_reward

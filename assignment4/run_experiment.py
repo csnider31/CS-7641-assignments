@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     seed = args.seed
     if seed is None:
-        seed = np.random.randint(0, (2 ** 32) - 1)
+        seed = np.random.randint(0, (2 ** 32) - 1, dtype=np.int64)
         logger.info("Using seed {}".format(seed))
         np.random.seed(seed)
         rand.seed(seed)
@@ -52,14 +52,14 @@ if __name__ == '__main__':
     envs = [
         {
             # This is not really a rewarding frozen lake env, but the custom class has extra functionality
-            'env': environments.get_rewarding_no_reward_frozen_lake_environment(),
+            'env': environments.get_small_rewarding_no_reward_frozen_lake_environment(),
             'name': 'frozen_lake',
-            'readable_name': 'Frozen Lake (8x8)',
+            'readable_name': 'Frozen Lake (4x4)',
         },
         {
-            'env': environments.get_large_rewarding_no_reward_frozen_lake_environment(),
+            'env': environments.get_med_large_rewarding_no_reward_frozen_lake_environment(),
             'name': 'large_frozen_lake',
-            'readable_name': 'Frozen Lake (20x20)',
+            'readable_name': 'Frozen Lake (16x16)',
         },
         {
             'env': environments.get_windy_cliff_walking_environment(),
